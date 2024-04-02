@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "507924445413",
+    "project_id": "satyug-erp",
+    "storage_bucket": "satyug-erp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507924445413:android:a8ec3a66eb2dbeec83fc0c",
+        "android_client_info": {
+          "package_name": "com.example.erp_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-zCSGIhZu-OH3kJe32cODRhK04mlfFQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507924445413:android:408cd8d727293c6e83fc0c",
+        "android_client_info": {
+          "package_name": "com.satyug.erp_students"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-zCSGIhZu-OH3kJe32cODRhK04mlfFQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507924445413:android:69c0163ca58b913583fc0c",
+        "android_client_info": {
+          "package_name": "com.satyug.erp_teacher"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-zCSGIhZu-OH3kJe32cODRhK04mlfFQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
