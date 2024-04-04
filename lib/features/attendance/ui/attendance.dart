@@ -1,10 +1,6 @@
-
-import 'package:erp_teacher/features/attendance/functions/attendance_functions.dart';
 import 'package:erp_teacher/services/firebase_database_services.dart';
 import 'package:erp_teacher/widgets/done.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../widgets/attendance_bubble.dart';
 
@@ -16,7 +12,6 @@ class Attendance extends StatefulWidget {
 }
 
 class _AttendanceState extends State<Attendance> {
-  AttendanceFunctions _attendanceFunctions = AttendanceFunctions();
   bool selecting = true;
   String? _class;
   bool _classesSelected = false;
@@ -27,7 +22,6 @@ class _AttendanceState extends State<Attendance> {
   final Map<String, String> attendanceMap = {};
 
   void updateAttendance(String name, String status) {
-    print("$name $status");
     setState(() {
       attendanceMap[name] = status;
     });
@@ -54,7 +48,8 @@ class _AttendanceState extends State<Attendance> {
                           Padding(
                             padding: const EdgeInsets.all(20),
                             child: FutureBuilder(
-                              future: _attendanceFunctions.getListOfClasses(),
+                              future:
+                                  FirebaseDatabaseServices().getListOfClasses(),
                               builder: (context, snapShot) {
                                 if (snapShot.hasData) {
                                   return DropdownMenu<String>(
@@ -70,6 +65,10 @@ class _AttendanceState extends State<Attendance> {
                                       _classesSelected = true;
                                       setState(() {});
                                     },
+                                  );
+                                } else if (snapShot.hasError) {
+                                  return Center(
+                                    child: Text(snapShot.error.toString()),
                                   );
                                 } else {
                                   return const CircularProgressIndicator();
@@ -191,8 +190,11 @@ class _AttendanceState extends State<Attendance> {
                       onPressed: () {
                         FirebaseDatabaseServices().markAttendance(
                             _class!, _subject!, _date, attendanceMap);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Done()));
-                        },
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Done()));
+                      },
                       child: const Text("Submit"),
                     ),
                   )

@@ -5,6 +5,10 @@ class Done extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/done.png");
+    return Container(
+        width: double.maxFinite,
+        height: double.maxFinite,
+        color: Colors.white,
+        child: Image.asset("assets/images/done.png"));
   }
 }

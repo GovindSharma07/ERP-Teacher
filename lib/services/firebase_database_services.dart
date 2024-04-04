@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseDatabaseServices {
   final db = FirebaseFirestore.instance;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   Future<void> storeTokenToDb(String uid) async {
     String busNumber = "";
@@ -38,30 +39,62 @@ class FirebaseDatabaseServices {
     }
   }
 
+  Future<List<dynamic>> getListOfClasses() async {
+    List<dynamic> classes = [];
+    var snapshot = await db
+        .collection("User-Teacher")
+        .doc(uid)
+        .collection("classes")
+        .doc("classes")
+        .get();
+    classes = snapshot.data()!["classes"];
+    return classes;
+  }
+
   Future<List<String>> getSubjects(String cls) async {
     List<String> subjects = [];
 
     var snapShots = await db
         .collection("User-Teacher")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(uid)
         .collection("classes")
         .doc("classes")
         .collection(cls)
         .get();
-    
-    snapShots.docs.forEach((element) {subjects.add(element.data()["subjectName"]); });
+
+    for (var element in snapShots.docs) {
+      subjects.add(element.data()["subjectName"]);
+    }
     return subjects;
   }
 
-  Future<List<StudentModel>> getListOfStudents(String cls)async{
+  Future<List<StudentModel>> getListOfStudents(String cls) async {
     List<StudentModel> students = [];
-    var snapshot  = await db.collection("User-Student").where("section",isEqualTo: cls).get();
-    snapshot.docs.forEach((element) {students.add(StudentModel.fromJson(element.data()));});
-    print(students);
+    var snapshot = await db
+        .collection("User-Student")
+        .where("section", isEqualTo: cls)
+        .get();
+    for (var element in snapshot.docs) {
+      students.add(StudentModel.fromJson(element.data()));
+    }
     return students;
   }
 
-  markAttendance(String cls,String sub,DateTime date,Map<String,String> json)async{
-    await db.collection("Attendance").doc(cls).collection(sub).doc("${date.day}-${date.month}-${date.year}").set(json);
+  markAttendance(
+      String cls, String sub, DateTime date, Map<String, String> json) async {
+    await db
+        .collection("Attendance")
+        .doc(cls)
+        .collection(sub)
+        .doc("${date.day}-${date.month}-${date.year}")
+        .set(json);
+  }
+
+  uploadNotes(String url, String title, String content, String cls) async {
+    await db
+        .collection("Notes")
+        .doc("classes")
+        .collection(cls)
+        .add({"title": title, "content": content, "url": url});
   }
 }
